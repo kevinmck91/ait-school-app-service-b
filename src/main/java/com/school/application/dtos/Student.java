@@ -1,11 +1,21 @@
 package com.school.application.dtos;
 
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Student {
 
+	@Id
+	@GeneratedValue
 	private Integer 	id;
 	private String 		forename;
 	private String 		surname;
-	private String 		dateOfBirth;
+	private Date 		dateOfBirth;
+	private String		status;
 	private int 		yearOfStudy;
 	
 	
@@ -13,11 +23,11 @@ public class Student {
 		super();
 	}
 
-	public Student(Integer id, String forename, String surname, String dateOfBirth, int yearOfStudy) {
-		super();
+	public Student(Integer id, String forename, String surname, Date dateOfBirth, String status, int yearOfStudy) {
 		this.id = id;
 		this.forename = forename;
 		this.surname = surname;
+		this.status = status;
 		this.dateOfBirth = dateOfBirth;
 		this.yearOfStudy = yearOfStudy;
 	}
@@ -46,11 +56,11 @@ public class Student {
 		this.surname = surname;
 	}
 
-	public String getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(String dateOfBirth) {
+	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
@@ -60,6 +70,14 @@ public class Student {
 
 	public void setYearOfStudy(int yearOfStudy) {
 		this.yearOfStudy = yearOfStudy;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@Override

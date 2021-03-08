@@ -1,0 +1,13 @@
+insert into STUDENT (id, forename, surname, date_of_birth, status , year_of_study) values (10,'John','Smith',TO_DATE('15/05/2008', 'DD/MM/YYYY'),'current', 1);
+insert into STUDENT (id, forename, surname, date_of_birth, status , year_of_study) values (20,'John','Clark',TO_DATE('13/04/2007', 'DD/MM/YYYY'),'past', -1);
+insert into STUDENT (id, forename, surname, date_of_birth, status , year_of_study) values (30,'John','Newman',TO_DATE('17/03/2007', 'DD/MM/YYYY'),'past', -1);
+insert into STUDENT (id, forename, surname, date_of_birth, status , year_of_study) values (40,'Mary','Whelan',TO_DATE('13/09/2006', 'DD/MM/YYYY'),'current', 2);
+insert into STUDENT (id, forename, surname, date_of_birth, status , year_of_study) values (50,'Mary','Newman',TO_DATE('18/04/2007', 'DD/MM/YYYY'),'current', 3);
+insert into STUDENT (id, forename, surname, date_of_birth, status , year_of_study) values (60,'James','Smith',TO_DATE('15/02/2005', 'DD/MM/YYYY'),'current', 3);
+insert into STUDENT (id, forename, surname, date_of_birth, status , year_of_study) values (70,'James','Duignan',TO_DATE('19/08/2009', 'DD/MM/YYYY'),'past', -1);
+insert into STUDENT (id, forename, surname, date_of_birth, status , year_of_study) values (80,'Anne','Macken',TO_DATE('23/03/2005', 'DD/MM/YYYY'),'past', -1);
+insert into STUDENT (id, forename, surname, date_of_birth, status , year_of_study) values (90,'Anne','Bloggs',TO_DATE('23/08/2005', 'DD/MM/YYYY'),'past', -1);
+insert into STUDENT (id, forename, surname, date_of_birth, status , year_of_study) values (100,'Anne','Newman',TO_DATE('26/03/2004', 'DD/MM/YYYY'),'current', 2);
+insert into STUDENT (id, forename, surname, date_of_birth, status , year_of_study) values (110,'Frank','Smith',TO_DATE('12/09/2006', 'DD/MM/YYYY'),'current', 1);
+insert into STUDENT (id, forename, surname, date_of_birth, status , year_of_study) values (120,'Noel','Glennon',TO_DATE('28/04/2007', 'DD/MM/YYYY'),'current', 2);
+insert into STUDENT (id, forename, surname, date_of_birth, status , year_of_study) values (130,'Andy','Clark',TO_DATE('29/02/2008', 'DD/MM/YYYY'),'past', -1);
