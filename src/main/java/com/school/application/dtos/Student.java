@@ -3,8 +3,12 @@ package com.school.application.dtos;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import com.school.application.enums.YearOfStudy;
 
 @Entity
 public class Student {
@@ -15,19 +19,19 @@ public class Student {
 	private String 		forename;
 	private String 		surname;
 	private Date 		dateOfBirth;
-	private String		status;
-	private int 		yearOfStudy;
+	
+	@Enumerated(EnumType.ORDINAL)
+	private YearOfStudy 		yearOfStudy;			// https://www.baeldung.com/jpa-persisting-enums-in-jpa 
 	
 	
 	public Student() {
 		super();
 	}
 
-	public Student(Integer id, String forename, String surname, Date dateOfBirth, String status, int yearOfStudy) {
+	public Student(Integer id, String forename, String surname, Date dateOfBirth, YearOfStudy yearOfStudy) {
 		this.id = id;
 		this.forename = forename;
 		this.surname = surname;
-		this.status = status;
 		this.dateOfBirth = dateOfBirth;
 		this.yearOfStudy = yearOfStudy;
 	}
@@ -64,22 +68,15 @@ public class Student {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public int getYearOfStudy() {
+	public YearOfStudy getYearOfStudy() {
 		return yearOfStudy;
 	}
 
-	public void setYearOfStudy(int yearOfStudy) {
+	public void setYearOfStudy(YearOfStudy yearOfStudy) {
 		this.yearOfStudy = yearOfStudy;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
+	
 	@Override
 	public String toString() {
 		return "Student [id=" + id + ", forename=" + forename + ", surname=" + surname + ", dateOfBirth=" + dateOfBirth
