@@ -30,11 +30,6 @@ public class StudentController {
 		return studentRepository.findAll();
 	}
 	
-/*	@GetMapping("students/{id}")
-	public Optional<Student> getAllStudents(@PathVariable Integer id) {
-		return studentRepository.findById(id);
-	}*/
-	
 	@GetMapping("students/{studentNumber}")
 	public Optional<Student> getStudentByStudentNumber(@PathVariable String studentNumber) {
 		return studentRepository.findByStudentNumber(studentNumber);
@@ -43,9 +38,16 @@ public class StudentController {
 	@PostMapping("students/")
 	public ResponseEntity createWine(@RequestBody Student newStudent) {
 
-		Student savedStudent = studentRepository.save(newStudent);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}").buildAndExpand(newStudent.getId()).toUri();
-		return ResponseEntity.created(location).build();
+		// If student number already exists , TODO throw an error
+		if(getStudentByStudentNumber(newStudent.getStudentNumber()).isPresent()) {
+			System.out.println("Student already exists");
+			return null; 
+		}
+		else {
+			Student savedStudent = studentRepository.save(newStudent);
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}").buildAndExpand(newStudent.getId()).toUri();
+			return ResponseEntity.created(location).build();
+		}
 
 	}
 
