@@ -21,7 +21,6 @@ public class Student {
 	private String 		forename;
 	private String 		surname;
 	private Date 		dateOfBirth;
-	
 	@Enumerated(EnumType.ORDINAL)
 	private YearOfStudy 		yearOfStudy;			// https://www.baeldung.com/jpa-persisting-enums-in-jpa 
 	
@@ -31,8 +30,7 @@ public class Student {
 	}
 
 		
-	public Student(Integer id, String studentNumber, String forename, String surname, Date dateOfBirth,
-			YearOfStudy yearOfStudy) {
+	public Student(Integer id, String studentNumber, String forename, String surname, Date dateOfBirth,	YearOfStudy yearOfStudy) {
 		super();
 		this.id = id;
 		this.studentNumber = studentNumber;
