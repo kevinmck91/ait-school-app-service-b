@@ -1,0 +1,20 @@
+package com.school.application.cloudconfig;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class CloudConfigController {
+	
+	
+	@Value("${greeting}")
+	private String role;
+	
+	@GetMapping("config/")
+	public String getFromConfigServer() {
+		return role;
+	}
+	
+}
