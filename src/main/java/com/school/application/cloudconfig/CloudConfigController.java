@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class CloudConfigController {
 	
 	
-	@Value("${greeting}")
-	private String role;
+	@Autowired
+	Configuration config;
 	
 	@GetMapping("config/")
-	public String getFromConfigServer() {
-		return role;
+	public Configuration getDataFromConfigServer() {
+		return config;
 	}
 	
 }
