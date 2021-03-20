@@ -13,8 +13,8 @@ public class CloudConfigController {
 	Configuration config;
 	
 	@GetMapping("config/")
-	public Configuration getDataFromConfigServer() {
-		return config;
+	public String getDataFromConfigServer() {
+		return config.toString();
 	}
 	
 }
