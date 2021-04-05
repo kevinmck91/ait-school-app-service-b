@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import com.school.application.dtos.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.school.application.dtos.Student;
-import com.school.application.exceptions.ModuleNotFoundException;
 import com.school.application.exceptions.StudentAlreadyExistsException;
 import com.school.application.exceptions.StudentNotFoundException;
 import com.school.application.repositories.StudentRepository;

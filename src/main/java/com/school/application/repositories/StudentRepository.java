@@ -3,8 +3,8 @@ package com.school.application.repositories;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import com.school.application.dtos.Student;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 // Takes in the Entity and the primary Key
 public interface StudentRepository extends JpaRepository<Student, Integer> {

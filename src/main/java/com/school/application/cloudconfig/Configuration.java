@@ -5,7 +5,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 @RefreshScope
-@ConfigurationProperties("schoolappconfig")
+@ConfigurationProperties("student")
 @Component
 public class Configuration {
 	
