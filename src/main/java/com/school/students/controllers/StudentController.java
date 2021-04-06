@@ -1,10 +1,13 @@
-package com.school.application.controllers;
+package com.school.students.controllers;
 
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-import com.school.application.dtos.Student;
+import com.school.students.dtos.Student;
+import com.school.students.exceptions.StudentAlreadyExistsException;
+import com.school.students.exceptions.StudentNotFoundException;
+import com.school.students.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import com.school.application.exceptions.StudentAlreadyExistsException;
-import com.school.application.exceptions.StudentNotFoundException;
-import com.school.application.repositories.StudentRepository;
 
 @RestController
 public class StudentController {

@@ -1,9 +1,9 @@
-package com.school.application.repositories;
+package com.school.students.repositories;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.school.application.dtos.Student;
+import com.school.students.dtos.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 // Takes in the Entity and the primary Key

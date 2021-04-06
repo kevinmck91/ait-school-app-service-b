@@ -1,11 +1,11 @@
-package com.school.application;
+package com.school.students;
 
+import com.school.students.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.school.application.repositories.StudentRepository;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
