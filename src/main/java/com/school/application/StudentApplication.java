@@ -5,7 +5,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.school.application.repositories.ModuleRepository;
 import com.school.application.repositories.StudentRepository;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
@@ -16,8 +15,6 @@ public class StudentApplication implements CommandLineRunner {
 	@Autowired
 	private StudentRepository studentRepository;
 
-	@Autowired
-	private ModuleRepository moduleRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(StudentApplication.class, args);
