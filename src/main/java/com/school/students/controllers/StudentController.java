@@ -28,11 +28,27 @@ public class StudentController {
 	private StudentRepository studentRepository;
 
 	@Autowired
-	private FeignClientRegistrationData feignclienttoregistrationdata;
+	private FeignClientRegistrationData feignClientRegistrationData;
 
 
 	@GetMapping("students/")
 	public List<Student> getAllStudents() {
+
+		List<Student> listOfStudent = studentRepository.findAll();
+
+		for (Student s : listOfStudent){
+
+			String studentNumber = s.getStudentNumber();
+
+			Optional<RegistrationData> foundRegistrationData = feignClientRegistrationData.getRegistrationDataByStudentNumber(studentNumber);
+
+			if(foundRegistrationData.isPresent()){
+				RegistrationData registrationData = foundRegistrationData.get();
+				s.setRegistrationData(registrationData);
+			}
+
+		}
+
 		return studentRepository.findAll();
 	}
 
@@ -41,7 +57,7 @@ public class StudentController {
 		
 		Optional<Student> foundStudent = studentRepository.findByStudentNumber(studentNumber);
 
-		Optional<RegistrationData> foundRegistrationData = feignclienttoregistrationdata.getRegistrationDataByStudentNumber(studentNumber);
+		Optional<RegistrationData> foundRegistrationData = feignClientRegistrationData.getRegistrationDataByStudentNumber(studentNumber);
 
 		if(foundRegistrationData.isPresent()){
 			RegistrationData registrationData = foundRegistrationData.get();
@@ -80,6 +96,19 @@ public class StudentController {
 		}
 
 		List<Student> foundStudents = studentRepository.findAllByDateOfBirthBetween(lowerBoundDate, upperBoundDate);
+
+		for (Student s : foundStudents){
+
+			String studentNumber = s.getStudentNumber();
+
+			Optional<RegistrationData> foundRegistrationData = feignClientRegistrationData.getRegistrationDataByStudentNumber(studentNumber);
+
+			if(foundRegistrationData.isPresent()){
+				RegistrationData registrationData = foundRegistrationData.get();
+				s.setRegistrationData(registrationData);
+			}
+
+		}
 
 		if (foundStudents.size() > 0)
 			return foundStudents;
