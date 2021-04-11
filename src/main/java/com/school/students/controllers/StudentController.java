@@ -2,15 +2,17 @@ package com.school.students.controllers;
 
 import java.net.URI;
 import java.text.SimpleDateFormat;
-import java.time.DateTimeException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+//import com.school.feignclients.RegistrationDataFeignClient;
+import com.school.registrationdata.dtos.RegistrationData;
 import com.school.students.dtos.Student;
 import com.school.students.exceptions.StudentAlreadyExistsException;
 import com.school.students.exceptions.StudentGenericError;
 import com.school.students.exceptions.StudentNotFoundException;
+import com.school.students.feignclient.FeignClientRegistrationData;
 import com.school.students.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,10 @@ public class StudentController {
 	@Autowired
 	private StudentRepository studentRepository;
 
+	@Autowired
+	private FeignClientRegistrationData feignclienttoregistrationdata;
+
+
 	@GetMapping("students/")
 	public List<Student> getAllStudents() {
 		return studentRepository.findAll();
@@ -34,6 +40,14 @@ public class StudentController {
 	public Optional<Student> getStudentByStudentNumber(@PathVariable String studentNumber) {
 		
 		Optional<Student> foundStudent = studentRepository.findByStudentNumber(studentNumber);
+
+		Optional<RegistrationData> foundRegistrationData = feignclienttoregistrationdata.getRegistrationDataByStudentNumber(studentNumber);
+
+		if(foundRegistrationData.isPresent()){
+			RegistrationData registrationData = foundRegistrationData.get();
+			foundStudent.get().setRegistrationData(registrationData);
+		}
+
 
 		if (foundStudent.isPresent())
 			return foundStudent;
@@ -118,8 +132,7 @@ public class StudentController {
 
 		if(!studentRepository.findByStudentNumber(studentNumber).isPresent())
 		{
-			System.out.println("Add New" + newStudent.getStudentNumber());
-			studentRepository.save(newStudent);
+			createStudent(newStudent);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		}
 		else

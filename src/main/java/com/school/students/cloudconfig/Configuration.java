@@ -30,9 +30,5 @@ public class Configuration {
 	public String toString() {
 		return "Configuration [greeting=" + greeting + ", connection=" + connection + "]";
 	}
-	
-	
-	
-	
 
 }

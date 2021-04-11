@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CloudConfigController {
-	
-	
+
 	@Autowired
 	Configuration config;
 	
