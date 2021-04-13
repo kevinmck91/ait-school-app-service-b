@@ -9,26 +9,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class Configuration {
 	
-	private String greeting;
-	private String connection;
-	
-	
-	public String getGreeting() {
-		return greeting;
-	}
-	public void setGreeting(String greeting) {
-		this.greeting = greeting;
-	}
-	public String getConnection() {
-		return connection;
-	}
-	public void setConnection(String connection) {
-		this.connection = connection;
-	}
-	
-	@Override
-	public String toString() {
-		return "Configuration [greeting=" + greeting + ", connection=" + connection + "]";
+	private String profileData;
+
+	public String getProfileData() {
+		return profileData;
 	}
 
+	public void setProfileData(String profileData) {
+		this.profileData = profileData;
+	}
+
+	@Override
+	public String toString() {
+		return "Configuration : " +
+				" profileData = '" + profileData + '\'' ;
+	}
 }

@@ -8,6 +8,7 @@ import java.util.Optional;
 
 //import com.school.feignclients.RegistrationDataFeignClient;
 import com.school.registrationdata.dtos.RegistrationData;
+import com.school.students.cloudconfig.Configuration;
 import com.school.students.dtos.Student;
 import com.school.students.exceptions.StudentAlreadyExistsException;
 import com.school.students.exceptions.StudentGenericError;
@@ -28,6 +29,9 @@ public class StudentController {
 	private StudentRepository studentRepository;
 
 	@Autowired
+	private Configuration cloudConfig;
+
+	@Autowired
 	private FeignClientRegistrationData feignClientRegistrationData;
 
 
@@ -36,6 +40,12 @@ public class StudentController {
 
 		List<Student> listOfStudent = studentRepository.findAll();
 
+		// Add the cloud config data to the object
+		for (Student s : listOfStudent)
+			s.setProfile(cloudConfig.getProfileData());
+
+
+		// Populate with the results of a call to service B
 		for (Student s : listOfStudent){
 
 			String studentNumber = s.getStudentNumber();
@@ -59,11 +69,13 @@ public class StudentController {
 
 		Optional<RegistrationData> foundRegistrationData = feignClientRegistrationData.getRegistrationDataByStudentNumber(studentNumber);
 
+
+
 		if(foundRegistrationData.isPresent()){
+			foundStudent.get().setProfile(cloudConfig.getProfileData());
 			RegistrationData registrationData = foundRegistrationData.get();
 			foundStudent.get().setRegistrationData(registrationData);
 		}
-
 
 		if (foundStudent.isPresent())
 			return foundStudent;
@@ -99,6 +111,8 @@ public class StudentController {
 
 		for (Student s : foundStudents){
 
+			s.setProfile(cloudConfig.getProfileData());
+
 			String studentNumber = s.getStudentNumber();
 
 			Optional<RegistrationData> foundRegistrationData = feignClientRegistrationData.getRegistrationDataByStudentNumber(studentNumber);
@@ -111,6 +125,7 @@ public class StudentController {
 		}
 
 		if (foundStudents.size() > 0)
+
 			return foundStudents;
 		else
 			throw new StudentNotFoundException("No students born between years " + yearLower + " and " + yearUpper);
