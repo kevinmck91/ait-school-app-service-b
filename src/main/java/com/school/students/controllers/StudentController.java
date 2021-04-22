@@ -22,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+
 @RestController
 public class StudentController {
 
@@ -133,14 +135,9 @@ public class StudentController {
 	}
 
 	@PostMapping("students/")
-	public ResponseEntity createStudent(@RequestBody Student newStudent) {
+	public ResponseEntity createStudent(@Valid @RequestBody Student newStudent) {
 
 		newStudent.setId(null);
-
-		// TODO: see cam this be added to validation
-		if (newStudent.getStudentNumber().length() != 5) {
-			throw new StudentGenericError("Student number must be exactly 5 characters");
-		}
 
 		// Check to see if the Student number already exists
 		Optional<Student> foundStudent = studentRepository.findByStudentNumber(newStudent.getStudentNumber());
@@ -170,7 +167,7 @@ public class StudentController {
 	}
 
 	@PutMapping("students/")
-	public ResponseEntity updateStudent(@RequestBody Student newStudent) {
+	public ResponseEntity updateStudent(@Valid @RequestBody Student newStudent) {
 
 		String studentNumber = newStudent.getStudentNumber();
 		studentRepository.findByStudentNumber(studentNumber);
