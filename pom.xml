@@ -50,7 +50,6 @@
 			<artifactId>h2</artifactId>
 		</dependency>
 
-
 		<!-- Cloud Config-->
 
 		<dependency>
@@ -70,7 +69,6 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
-
 		<!-- Eureka -->
 
 		<dependency>
@@ -82,6 +80,34 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
+
+		<!-- Sleuth -->
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-sleuth</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-sleuth-zipkin</artifactId>
+		</dependency>
+
+		<!-- Swagger -->
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-boot-starter</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
+		<!-- Shared -->
 
 		<dependency>
 			<groupId>com.school</groupId>

@@ -67,14 +67,13 @@ public class StudentController {
 		
 		Optional<Student> foundStudent = studentRepository.findByStudentNumber(studentNumber);
 
+		// Call to registration data (Service B)
 		Optional<RegistrationData> foundRegistrationData = feignClientRegistrationData.getRegistrationDataByStudentNumber(studentNumber);
 
-
-
 		if(foundRegistrationData.isPresent()){
-			foundStudent.get().setProfile(cloudConfig.getProfileData());
+			foundStudent.get().setProfile(cloudConfig.getProfileData());		// Set the Cloud Config data in the Student (Service A)
 			RegistrationData registrationData = foundRegistrationData.get();
-			foundStudent.get().setRegistrationData(registrationData);
+			foundStudent.get().setRegistrationData(registrationData);			// Set the Registration Data (Service B) in the Student (Service A)
 		}
 
 		if (foundStudent.isPresent())
@@ -86,7 +85,7 @@ public class StudentController {
 	@GetMapping("students/yearOfBirthBetween/")
 	public List<Student> getStudentBetweenBirthYears(@RequestParam(required=true) int yearLower, @RequestParam(required=true) int yearUpper) {
 
-		// Convert input years into two Dates and use dates to query database
+		// Convert input years into two dates and use dates to query database
 		String lowerBoundDateString = "01/01/" + yearLower;
 		String upperBoundDateString = "31/12/" + yearUpper;
 
@@ -107,8 +106,10 @@ public class StudentController {
 			throw new StudentGenericError("Year inputs incorrect YearLower must be before YearUpper");
 		}
 
+		// Get all the students with a date of birth between the two input dates
 		List<Student> foundStudents = studentRepository.findAllByDateOfBirthBetween(lowerBoundDate, upperBoundDate);
 
+		// Add the Cloud Config server data and Registration Data each student that is found above
 		for (Student s : foundStudents){
 
 			s.setProfile(cloudConfig.getProfileData());
@@ -125,7 +126,6 @@ public class StudentController {
 		}
 
 		if (foundStudents.size() > 0)
-
 			return foundStudents;
 		else
 			throw new StudentNotFoundException("No students born between years " + yearLower + " and " + yearUpper);
@@ -135,8 +135,12 @@ public class StudentController {
 	@PostMapping("students/")
 	public ResponseEntity createStudent(@RequestBody Student newStudent) {
 
-		if (newStudent.getStudentNumber().length() != 5)
+		newStudent.setId(null);
+
+		// TODO: see cam this be added to validation
+		if (newStudent.getStudentNumber().length() != 5) {
 			throw new StudentGenericError("Student number must be exactly 5 characters");
+		}
 
 		// Check to see if the Student number already exists
 		Optional<Student> foundStudent = studentRepository.findByStudentNumber(newStudent.getStudentNumber());
@@ -157,7 +161,6 @@ public class StudentController {
 	@Transactional
 	@DeleteMapping("students/{studentNumber}/")
 	public void deleteStudentByStudentNumber(@PathVariable String studentNumber) {
-
 		try {
 			studentRepository.deleteByStudentNumber(studentNumber);
 		} catch (Exception e) {
@@ -172,18 +175,18 @@ public class StudentController {
 		String studentNumber = newStudent.getStudentNumber();
 		studentRepository.findByStudentNumber(studentNumber);
 
-		System.out.println(studentRepository.findByStudentNumber(studentNumber));
-
 		if(!studentRepository.findByStudentNumber(studentNumber).isPresent())
 		{
+			// Student does not exist, create a new one
 			createStudent(newStudent);
-			return ResponseEntity.status(HttpStatus.OK).build();
+			return ResponseEntity.status(HttpStatus.CREATED).build();
 		}
 		else
 		{
+			// Student exists so update existing
 			newStudent.setId(studentRepository.findByStudentNumber(studentNumber).get().getId());
-			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}").buildAndExpand(newStudent.getId()).toUri();
-			return ResponseEntity.created(location).build();
+			Student test = studentRepository.save(newStudent);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		}
 
 	}
