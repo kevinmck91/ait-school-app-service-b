@@ -10,6 +10,7 @@ import java.util.Optional;
 import com.school.registrationdata.dtos.RegistrationData;
 import com.school.students.cloudconfig.Configuration;
 import com.school.students.dtos.Student;
+import com.school.students.enums.MaritalStatus;
 import com.school.students.exceptions.StudentAlreadyExistsException;
 import com.school.students.exceptions.StudentGenericError;
 import com.school.students.exceptions.StudentNotFoundException;
@@ -133,6 +134,35 @@ public class StudentController {
 			throw new StudentNotFoundException("No students born between years " + yearLower + " and " + yearUpper);
 
 	}
+
+	@GetMapping("students/maritalStatus/")
+	public List<Student> getStudentsByMaritalStatus(@RequestParam(required=true) MaritalStatus status) {
+
+		List<Student> foundStudents = studentRepository.findAllByMaritalStatus(status);
+
+		// Add the Cloud Config server data and Registration Data each student that is found above
+		for (Student s : foundStudents){
+
+			s.setProfile(cloudConfig.getProfileData());
+
+			String studentNumber = s.getStudentNumber();
+
+			Optional<RegistrationData> foundRegistrationData = feignClientRegistrationData.getRegistrationDataByStudentNumber(studentNumber);
+
+			if(foundRegistrationData.isPresent()){
+				RegistrationData registrationData = foundRegistrationData.get();
+				s.setRegistrationData(registrationData);
+			}
+
+		}
+
+		if (foundStudents.size() > 0)
+			return foundStudents;
+		else
+			throw new StudentNotFoundException("No students found with martial status of : " + status);
+
+	}
+
 
 	@PostMapping("students/")
 	public ResponseEntity createStudent(@Valid @RequestBody Student newStudent) {
